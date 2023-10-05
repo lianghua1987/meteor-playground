@@ -2,10 +2,14 @@ import {Meteor} from 'meteor/meteor';
 import {Links} from "../imports/collections/links";
 import {WebApp} from "meteor/webapp";
 import ConnectRoute from 'connect-route';
+import {Bins} from "../imports/collections/bins";
 
 Meteor.startup(() => {
     Meteor.publish('links', function () {
         return Links.find({});
+    });
+    Meteor.publish('bins', function () {
+        return Bins.find({ownerId: this.userId});
     });
 });
 
@@ -21,6 +25,7 @@ function onRoute(req, res, next) {
 }
 
 const middleware = ConnectRoute(function (router) {
+
     router.get('/:token', onRoute);
 });
 

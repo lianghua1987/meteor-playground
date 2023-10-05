@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Links} from "../../collections/links";
-import {
-    withTracker
-} from "meteor/react-meteor-data";
+import {Links} from "../../../collections/links";
+import {withTracker} from "meteor/react-meteor-data";
 
 class LinkList extends Component {
     renderRows() {
@@ -10,7 +8,7 @@ class LinkList extends Component {
             const {url, clicks, token} = link;
             const shortLink = `http://localhost:3000/${token}`;
             return (
-                <tr>
+                <tr key = "link._id">
                     <td>{url}</td>
                     <td>
                         <a href={shortLink}>{shortLink}</a>
