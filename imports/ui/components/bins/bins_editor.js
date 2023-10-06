@@ -1,21 +1,28 @@
-import React from "react";
+import React, {useEffect} from "react";
 import CodeMirror from 'react-codemirror';
-import 'codemirror/mode/markdown/markdown'
 
-const BinsEditor = (props) => {
+const BinsEditor = ({bin}) => {
+
+    // https://github.com/JedWatson/react-codemirror/issues/106
+
+    useEffect(() => {
+        const editor = document.querySelector('.CodeMirror').CodeMirror;
+        editor.setValue(bin.content);
+    }, [bin]);
+
     const onChange = (content) => {
-        Meteor.call("bins.update", props.bin, content);
+        Meteor.call("bins.update", bin, content);
     }
+
     return (
         <div className="col-xs-8">
             <h5>Input</h5>
             <CodeMirror
-                value = {props.bin.content}
+                value={bin.content}
                 onChange={onChange}
                 options={{mode: 'markdown', lineNumbers: true}}/>
         </div>
     );
-
 };
 
 export default BinsEditor;
